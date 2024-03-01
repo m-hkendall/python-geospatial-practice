@@ -45,4 +45,14 @@ db = pd.read_csv("https://darribas.org/gds_course/content/data/liv_pop.csv",inde
 #print(db.head())
 
 #Index-based queries
+#Ex. List-based queries
+#list_qry = db.loc[['E01006512', 'E01006513', 'E01006514', 'E01006515'], ['Total', 'Europe']] #this extracts the total and European population of the first four areas in the table; the square brackets delineate the index of the items we want in this subset - this is called a list-based query
+#print(list_qry)
+#Ex. Range-based queries - we give two indices and those, as well as any indices found within the range will also be returned
+#range_qry = db.loc["E01006514":"E01006518","Europe":"Antarctica and Oceania"]
+#print(range_qry)
+#Ex. Combined list and range queries
+#range_list_qry = db.loc["E01006514":"E01006518",["Europe","Total"]]
+#print(range_list_qry)
 
+#Condition-based queries
