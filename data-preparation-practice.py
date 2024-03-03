@@ -75,8 +75,13 @@ db.head()
 #print(moreThan2500Total_query)
 #moreThan2500LessThan10000_query = db.query("(Total > 2500) & (Total < 10000)")
 #print(moreThan2500LessThan10000_query)
-
 #Combining queries
 #Selecting areas with more than 25 people from the Americas and Carribean, but less than 1,500 in total:
-moreThan25AmericasCarribeanLessThan1500Total = db.loc[(db['The Americas and the Caribbean'] > 25) & (db['Total'] < 1500), :]
-print(moreThan25AmericasCarribeanLessThan1500Total)
+#moreThan25AmericasCarribeanLessThan1500Total = db.loc[(db['The Americas and the Caribbean'] > 25) & (db['Total'] < 1500), :]
+#print(moreThan25AmericasCarribeanLessThan1500Total)
+
+#Sorting
+#Sort the table by total population:
+#db_population_sorted = db.sort_values('Total', ascending=True) #ascending=True == print smallest to largest; ascending=False == print largest to smallest
+#db_population_sorted.head()
+#print(db_population_sorted)
