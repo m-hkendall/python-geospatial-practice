@@ -21,16 +21,17 @@ db = pd.read_csv("https://darribas.org/gds_course/content/data/liv_pop.csv",inde
 #print(db.describe().T) #this transposes the table
 #print(db.min()) #this obtains minimum values for the table
 #print(db['Europe'].min()) #this gives us the minimum values for the Europe column of the dataset
+#pandas.DataFrame.loc: access a group of rows and columns by label(s) or a boolean array
 #print(db.loc['E01006512', :].std()) #this gives the standard deviation for the E01006512 row of the dataset
 
 #Creating new columns - generate new columns by applying operations to existing columns
 #Ex. calculate total population by area
-#total = db['Europe'] + db['Africa'] + db['Middle East and Asia'] + db['The Americas and the Caribbean'] + db['Antarctica and Oceania'] #this is the longcoded version
+total = db['Europe'] + db['Africa'] + db['Middle East and Asia'] + db['The Americas and the Caribbean'] + db['Antarctica and Oceania'] #this is the longcoded version
 #print(total.head())
-#total = db.sum(axis=1) #this is the short version - the sum function in this context gives us the total sum of population by areas
+total = db.sum(axis=1) #this is the short version - the sum function in this context gives us the total sum of population by areas
 #print(total.head()) 
-#db['Total'] = total #this adds our total sum of population by areas calculations as a new column in the table
-#db.head()
+db['Total'] = total #this adds our total sum of population by areas calculations as a new column in the table
+db.head()
 #print(db.head())
 #Ex. Generating new table values for a new column using scalars that can be modifed
 #db['ones'] = 1
@@ -56,3 +57,26 @@ db = pd.read_csv("https://darribas.org/gds_course/content/data/liv_pop.csv",inde
 #print(range_list_qry)
 
 #Condition-based queries
+#Dataframes support data selection based on conditions, i.e., we don't know exactly what observations we want, but we do know what conditions they need to satisfy, e.g., areas with more than 2000 inhabitants
+#Selecting areas with more than 2,500 people in Total:
+#moreThan5000Total = db.loc[db['Total'] > 2500, :]
+#print(moreThan5000Total)
+#Selecting areas with no more than 750 Europeans:
+#noMoreThan750Europeans = db.loc[db['Europe'] < 750, :]
+#print(noMoreThan750Europeans)
+#Selecting areas with exactly 10 persons from Antarctica and Oceania:
+#exactly10AntarcticaAndOceania = db.loc[db['Antarctica and Oceania'] == 10, :]
+#print(exactly10AntarcticaAndOceania)
+#Selecting areas where European population is less than half the population:
+#euLessThanHalfPopulation = db.loc[(db['Europe'] * 100. /db['Total']) < 50, :]
+#print(euLessThanHalfPopulation)
+# Querying the dataframe using the pandas.DataFrame.query operator
+#moreThan2500Total_query = db.query("Total > 2500")
+#print(moreThan2500Total_query)
+#moreThan2500LessThan10000_query = db.query("(Total > 2500) & (Total < 10000)")
+#print(moreThan2500LessThan10000_query)
+
+#Combining queries
+#Selecting areas with more than 25 people from the Americas and Carribean, but less than 1,500 in total:
+moreThan25AmericasCarribeanLessThan1500Total = db.loc[(db['The Americas and the Caribbean'] > 25) & (db['Total'] < 1500), :]
+print(moreThan25AmericasCarribeanLessThan1500Total)
