@@ -3,6 +3,7 @@
 import os
 import pandas as pd
 import seaborn as sea
+import matplotlib.pyplot as plt
 
 db = pd.read_csv("https://darribas.org/gds_course/content/data/liv_pop.csv",index_col='GeographyCode')
 # read_csv is a pandas libary method that allows for reading csv files
@@ -85,3 +86,9 @@ db.head()
 #db_population_sorted = db.sort_values('Total', ascending=True) #ascending=True == print smallest to largest; ascending=False == print largest to smallest
 #db_population_sorted.head()
 #print(db_population_sorted)
+
+#Visualization
+histogram = sea.histplot(db['Total'], kde=False) #kde argument, a boolean, if True, will compute a kernel density estimate to smooth the distribution and show these lines on the plot
+plt.show() #this is the command to show the chart in a new window
+kernelDensityPlot = sea.kdeplot(db['Total'], shade=True) #a kernel desntiy estimator (KDE) plot is a method for visualizing the distribution of observations in a dataset, analogous to a histogram, though the KDE represents data using a continuous probability density curve; the shade parameter adds a shade under the curve
+plt.show()
