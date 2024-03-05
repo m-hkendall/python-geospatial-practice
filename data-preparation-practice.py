@@ -120,5 +120,8 @@ print(tidy_subgroupsDF.head())
 tidy_subgroupsDF = tidy_subgroupsDF.rename(columns={'level_1': 'Subgroup', 0: 'Freq'}) #This renames the columns 
 print(tidy_subgroupsDF.head()) #This subgroups table is officially clean
 #Grouping, transforming, aggregating
-
+#Compute the total sum of population by each subgroup using the groupby and sum methods
+population_grouped = tidy_subgroupsDF.groupby('Subgroup')
+print(population_grouped.sum())
+print(population_grouped.describe())
 
