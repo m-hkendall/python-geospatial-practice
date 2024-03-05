@@ -10,5 +10,5 @@ import pandas as pd
 import seaborn as sea
 import matplotlib.pyplot as plt
 
-db = pd.read_csv("../data/NFDB_point_20220901.txt", sep=",")
+db = pd.read_csv("C:\\Users\\maddy\\OneDrive\\Documents\\Github\\python-geospatial-practice\\data\\NFDB_point_20220901.csv") #need the double back-slashes to deal with unicode error;
 print(db.head())
