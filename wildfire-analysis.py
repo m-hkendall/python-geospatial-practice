@@ -11,4 +11,13 @@ import seaborn as sea
 import matplotlib.pyplot as plt
 
 db = pd.read_csv("C:\\Users\\maddy\\OneDrive\\Documents\\Github\\python-geospatial-practice\\data\\NFDB_point_20220901.csv") #need the double back-slashes to deal with unicode error;
-print(db.head())
+#print(db.head())
+
+wildfireTotalCountPerDecade = db.value_counts(subset='DECADE', sort=False)
+print(wildfireTotalCountPerDecade)
+wildfireTotalCountPerDecade_barChart = wildfireTotalCountPerDecade.plot.bar()
+plt.title("Number of Canadian Wildfires Per Decade")
+plt.xlabel("Decade")
+plt.ylabel("Number of Wildfires")
+plt.show()
+
