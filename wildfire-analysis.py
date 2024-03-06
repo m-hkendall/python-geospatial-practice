@@ -26,8 +26,7 @@ wildfireTotalCountPerDecade = db.value_counts(subset='DECADE', sort=False)
 #2. How many wildfires in Canada have occurred per decade and per size?
 wildfireTotalCountPerSize = db.value_counts(subset="SIZE_HA")
 #print(wildfireTotalCountPerSize)
-#fire_size_bracket = db.loc[db['SIZE_HA'] >= '1000000', 'Fire_Size_Bracket'] = '1,000,000+ HA'
-#db['Fire_Size_Bracket'] = fire_size_bracket
+#The following code creates the Fire_Size_Brackets using the numpy.select method 
 wildfire_conditions = [
     (db['SIZE_HA'] > 0) & (db['SIZE_HA'] <= 199),
     (db['SIZE_HA'] > 200) & (db['SIZE_HA'] <= 999),
@@ -51,7 +50,7 @@ db['Fire_Size_Bracket'] = np.select(wildfire_conditions, wildfire_size_categorie
 wildfireBySizeCategoryCount = db.value_counts(subset="Fire_Size_Bracket", sort=False)
 #print(wildfireBySizeCategoryCount)
 
-pivot_table = pd.pivot_table(db[['DECADE', 'Fire_Size_Bracket']], index='DECADE', columns='Fire_Size_Bracket', aggfunc='size', fill_value=0, sort=False)
+pivot_table = pd.pivot_table(db[['DECADE', 'Fire_Size_Bracket']], index='DECADE', columns='Fire_Size_Bracket', aggfunc='size', fill_value=0, sort=False) #aggfunc 'size' gives the count of the incidences of fire_size_bracket per fire size bracket, thus giving the count of fire size with rows of decade and columns of fire size brackets
 #pivot_table_sorted = pivot_table.sort_values(by="DECADE", ascending=True) #This sorts the index (rows) of the pivot table from earliest to most recent dates
 pivot_table_sorted = pivot_table.sort_index(axis=0).sort_index(axis=1)
 pivot_table_sorted = pivot_table_sorted.reindex(columns=pivot_table_sorted.columns.sort_values(ascending=False, key=lambda x: x != '1,000,000+ HA')) #This custom sorting function puts the troublesom "1,000,000+ HA" column at the end of the pivot table
@@ -62,3 +61,5 @@ plt.xlabel("Decade")
 plt.ylabel("Number of fires")
 plt.legend(title="Wildfire Size in Hectares")
 plt.show()
+
+# 3. How many wildfires occur in each month in Canada?
