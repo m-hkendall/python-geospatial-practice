@@ -77,12 +77,30 @@ wildfireTotalCountPerDecade = db.value_counts(subset='DECADE', sort=False)
 #plt.show()
 
 # 4. How many wildfires have occurred per decade and cause?
-wildfiresByDecadeAndCause_pivotTable = pd.pivot_table(db[['DECADE', 'CAUSE']], index="DECADE", columns="CAUSE", aggfunc="size", sort=False, fill_value=0)
-wildfiresByDecadeAndCause_pivotTable_sorted = wildfiresByDecadeAndCause_pivotTable.sort_index(axis=0)
-print(wildfiresByDecadeAndCause_pivotTable_sorted)
-wildfiresByDecadeAndCause_pivotTable_sorted.plot.bar()
-plt.title("Number of Wildfires in Canada by Decade and Cause")
-plt.xlabel("Decade")
+#wildfiresByDecadeAndCause_pivotTable = pd.pivot_table(db[['DECADE', 'CAUSE']], index="DECADE", columns="CAUSE", aggfunc="size", sort=False, fill_value=0)
+#wildfiresByDecadeAndCause_pivotTable_sorted = wildfiresByDecadeAndCause_pivotTable.sort_index(axis=0)
+#print(wildfiresByDecadeAndCause_pivotTable_sorted)
+#wildfiresByDecadeAndCause_pivotTable_sorted.plot.bar()
+#plt.title("Number of Wildfires in Canada by Decade and Cause")
+#plt.xlabel("Decade")
+#plt.ylabel("Number of fires")
+#plt.legend(title="Cause", labels=["Human", "Lightnight", "Prescribed Burn", "Reburn", "Unknown"])
+#plt.show()
+
+# 5. What is the number of wildfires that occurred per agency?
+#Step 1. Clean SRC_AGENCY data so that any agency denoted with a prefix of PC gets labeled as ParksCanada
+column_name = 'SRC_AGENCY'
+column_dtype = db.dtypes[column_name]
+print("Data type of column '{}' : '{}' ".format(column_name, column_dtype)) #I thought SRC_AGENCY was a string but apparently it's an object, this code checks and returns what its datatype is
+for i in range(len(db)):
+    if db[column_name][i].startswith('PC'):
+        db[column_name][i] = 'ParksCanada'
+
+wildfireTotalCountPerAgency = db.value_counts(subset="SRC_AGENCY")
+#print(wildfireTotalCountPerAgency)
+
+wildfireTotalCountPerAgency_barChart = wildfireTotalCountPerAgency.plot.bar()
+plt.title("Number of Wildfires in Canada by Agency")
+plt.xlabel("Agency")
 plt.ylabel("Number of fires")
-plt.legend(title="Cause", labels=["Human", "Lightnight", "Prescribed Burn", "Reburn", "Unknown"])
 plt.show()
