@@ -63,15 +63,26 @@ wildfireTotalCountPerDecade = db.value_counts(subset='DECADE', sort=False)
 #plt.show()
 
 # 3. How many wildfires occur in each month in Canada?
-wildfireTotalCountPerMonth = db.value_counts(subset="MONTH", sort=False) #This code gives us the full count of wildfires per month, including those in the db where the month = 0
+#wildfireTotalCountPerMonth = db.value_counts(subset="MONTH", sort=False) #This code gives us the full count of wildfires per month, including those in the db where the month = 0
 
 #We want to only look at the wildfires where the months are in the range of 1-12, or, January-December. 
-monthMask = db['MONTH'] == 0 #Step 1: create a boolean mask for the rows to remove, i.e., the wildfires where the MONTH = 0
-wildfireMonth_db = db[~monthMask] #Step 2: select all wildfires except the ones where the month = 0
-wildfireMonth_db_TotalCountPerMonth = wildfireMonth_db.value_counts(subset="MONTH", sort=False) #Step 3: determine the new count of wildfires per month, where the months are 1-12
-print(wildfireMonth_db_TotalCountPerMonth)
-wildfireMonth_db_TotalCountPerMonth.plot.bar()
-plt.title("Number of Wildfires in Canada by Month")
-plt.xlabel("Month")
+#monthMask = db['MONTH'] == 0 #Step 1: create a boolean mask for the rows to remove, i.e., the wildfires where the MONTH = 0
+#wildfireMonth_db = db[~monthMask] #Step 2: select all wildfires except the ones where the month = 0
+#wildfireMonth_db_TotalCountPerMonth = wildfireMonth_db.value_counts(subset="MONTH", sort=False) #Step 3: determine the new count of wildfires per month, where the months are 1-12
+#print(wildfireMonth_db_TotalCountPerMonth)
+#wildfireMonth_db_TotalCountPerMonth.plot.bar()
+#plt.title("Number of Wildfires in Canada by Month")
+#plt.xlabel("Month")
+#plt.ylabel("Number of fires")
+#plt.show()
+
+# 4. How many wildfires have occurred per decade and cause?
+wildfiresByDecadeAndCause_pivotTable = pd.pivot_table(db[['DECADE', 'CAUSE']], index="DECADE", columns="CAUSE", aggfunc="size", sort=False, fill_value=0)
+wildfiresByDecadeAndCause_pivotTable_sorted = wildfiresByDecadeAndCause_pivotTable.sort_index(axis=0)
+print(wildfiresByDecadeAndCause_pivotTable_sorted)
+wildfiresByDecadeAndCause_pivotTable_sorted.plot.bar()
+plt.title("Number of Wildfires in Canada by Decade and Cause")
+plt.xlabel("Decade")
 plt.ylabel("Number of fires")
+plt.legend(title="Cause", labels=["Human", "Lightnight", "Prescribed Burn", "Reburn", "Unknown"])
 plt.show()
