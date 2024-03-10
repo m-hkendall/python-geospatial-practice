@@ -5,6 +5,7 @@
 # 4. How many wildfires have occurred per decade and cause?
 # 5. What is the number of wildfires that occurred per agency?
 
+
 import os
 import pandas as pd
 import seaborn as sea
