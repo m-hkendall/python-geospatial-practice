@@ -1,5 +1,5 @@
 import struct
-
+import numpy as np
 #def read_binary_file(file_path, format_string):
 #    data_set = []
 #    with open(file_path, 'rb') as f:
@@ -74,6 +74,18 @@ def find_largest_value_for_day(data, day_index):
                 largest_value = value
     return largest_value
 
+def compute_summary_statistics_for_day(data, day_index):
+    day_data = data[day_index] 
+    flattened_data = np.array(day_data).flatten() #Transforms grid values into 1D array
+    summary_statistics = {
+        'Mean: ': np.mean(flattened_data),
+        'Median: ': np.median(flattened_data),
+        'Standard Deviation: ': np.std(flattened_data),
+        'Minimum: ': np.min(flattened_data),
+        'Maximum: ': np.max(flattened_data),
+    }
+    return summary_statistics
+
 file_path = 'C:\\cygwin64\\snowmodel\\snowmodel-fraserexperimental-test1\\outputs\\wo_assim\\swed.gdat'
 format_string = 'f'
 grid_size = (60,41)
@@ -85,3 +97,7 @@ selected_day_index = 284 #Python indexing starts at 0, so to check the largest v
 largest_value_for_selected_day = find_largest_value_for_day(data, selected_day_index)
 print(f"Largest value for day {selected_day_index + 1}: {largest_value_for_selected_day}")
 
+summary_stats_for_selected_day = compute_summary_statistics_for_day(data, selected_day_index)
+print(f"Summary Statistics for Day {selected_day_index + 1}: ")
+for stat, value in summary_stats_for_selected_day.items():
+    print(f"{stat}: {value}")
