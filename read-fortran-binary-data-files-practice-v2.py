@@ -1,43 +1,6 @@
 import struct
 import numpy as np
 import matplotlib.pyplot as plt
-#def read_binary_file(file_path, format_string):
-#    data_set = []
-#    with open(file_path, 'rb') as f:
-#        while True:
-#            chunk = f.read(struct.calcsize(format_string))
-#            if not chunk:
-#                break
-#            data = struct.unpack(format_string, chunk)
-#            data_set.append(data)
-#    return data_set
-
-#file_path = 'C:\\cygwin64\\snowmodel\\snowmodel-fraserexperimental-test1\\outputs\\wo_assim\\swed.gdat'
-#format_string = 'f'
-
-#data_set = read_binary_file(file_path, format_string)
-#print(data_set)
-
-#def read_binary_file(file_path, format_string):
-#    data = []
-#    with open(file_path, 'rb') as f:
-#        while True:
-#            chunk = f.read(struct.calcsize(format_string))
-#            if not chunk:
-#                break
-#            record = struct.unpack(format_string, chunk)
-#            data.append(record)
-#    return data
-
-#def print_data_for_each_day(data):
-#    for day, record in enumerate(data):
-#        print(f"Data for day {day + 1}: {record}")
-
-#file_path = 'C:\\cygwin64\\snowmodel\\snowmodel-fraserexperimental-test1\\outputs\\wo_assim\\swed.gdat'
-#format_string = 'f'
-
-#data = read_binary_file(file_path, format_string)
-#print_data_for_each_day(data)
 
 def read_binary_file(file_path, format_string, grid_size):
     data = []
